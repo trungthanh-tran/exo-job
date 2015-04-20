@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.exoplatform.org/xml/ns/kernel_1_2.xsd http://www.exoplatform.org/xml/ns/kernel_1_2.xsd"
+        xmlns="http://www.exoplatform.org/xml/ns/kernel_1_2.xsd">
+
+    <component>
+        <type>org.exoplatform.services.scheduler.impl.QuartzSheduler</type>
+    </component>
+
+    <component>
+        <type>org.exoplatform.services.scheduler.QueueTasks</type>
+    </component>
+
+    <component>
+        <key>org.exoplatform.services.scheduler.JobSchedulerService</key>
+        <type>org.exoplatform.services.scheduler.impl.JobSchedulerServiceImpl</type>
+    </component>
+
+    <external-component-plugins>
+    <target-component>org.exoplatform.services.scheduler.JobSchedulerService</target-component>
+    <component-plugin>
+        <name>AddCronJob</name>
+        <set-method>addCronJob</set-method>
+        <type>org.exoplatform.services.scheduler.CronJob</type>
+        <description>Fares Job test</description>
+        <init-params>
+            <properties-param>
+                <name>cronjob.info</name>
+                <description>Configuration for daily send notification</description>
+                <property name="jobName" value="FaresJob"/>
+                <property name="groupName" value="CleanerGroup"/>
+                <property name="job" value="org.exoplatform.samples.SpaceCleanerService"/>
+                <property name="expression" value="* * * * * ?"/> <!-- The job will be performed every second -->
+            </properties-param>
+        </init-params>
+    </component-plugin>
+</external-component-plugins>
+</configuration>
